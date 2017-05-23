@@ -11,7 +11,6 @@ set(DEVICE_LOCATION
 if(bossac)
     if(MSYS OR MINGW)
         add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin
-                COMMAND ${PROJECT_SOURCE_DIR}/targets/arm32/cm3/atmel/sam3x/sam3x8e/flashscripts/arduino_due.bat
                 COMMAND ${bossac} -p ${DEVICE_LOCATION} -U false -e -w -v -b ${PROJECT_NAME}.bin -R
                 # ^ erease -> write -> verify -> boot -> reset
         )
