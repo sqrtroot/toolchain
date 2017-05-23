@@ -9,17 +9,17 @@ set(DEVICE_LOCATION
 )
 
 if(bossac)
-    if(WIN32)
+    if(MSYS OR MINGW)
         add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin
                 COMMAND ${PROJECT_SOURCE_DIR}/targets/arm32/cm3/atmel/sam3x/sam3x8e/flashscripts/arduino_due.bat
                 COMMAND ${bossac} -p ${DEVICE_LOCATION} -U false -e -w -v -b ${PROJECT_NAME}.bin -R
                 # ^ erease -> write -> verify -> boot -> reset
         )
-    else(WIN32)
+    else(MSYS OR MINGW)
         add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin
                 COMMAND stty 1200 -F /dev/${DEVICE_LOCATION}
                 COMMAND ${bossac} -p ${DEVICE_LOCATION} -U false -e -w -v -b ${PROJECT_NAME}.bin -R
                 # ^ erease -> write -> verify -> boot -> reset
         )
-    endif(WIN32)
+    endif(MSYS OR MINGW)
 endif()
