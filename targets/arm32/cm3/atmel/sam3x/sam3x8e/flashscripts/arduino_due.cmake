@@ -9,8 +9,16 @@ set(DEVICE_LOCATION
 )
 
 if(bossac)
+    if(MSYS OR MINGW)
         add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin
                 COMMAND ${bossac} -p ${DEVICE_LOCATION} -U false -e -w -v -b ${PROJECT_NAME}.bin -R
                 # ^ erease -> write -> verify -> boot -> reset
         )
+    else(MSYS OR MINGW)
+        add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin
+                COMMAND stty 1200 -F /dev/${DEVICE_LOCATION}
+                COMMAND ${bossac} -p ${DEVICE_LOCATION} -U false -e -w -v -b ${PROJECT_NAME}.bin -R
+                # ^ erease -> write -> verify -> boot -> reset
+        )
+    endif(MSYS OR MINGW)
 endif()
